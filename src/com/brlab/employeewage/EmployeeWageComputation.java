@@ -1,19 +1,23 @@
 package com.brlab.employeewage;
 
-import java.util.Scanner;
+import java.util.Random;
 
 public class EmployeeWageComputation {
 
     public static void main(String[] args) {
-        System.out.println("Welcome to EmployeeWage Computation Program on master branch");
+        System.out.println("Welcome to Employee Wage Computation Program on master branch");
 
+        // Create Random object
+        Random random = new Random();
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("enter here\n1 - Present \n2 - Absent");
-        int n = sc.nextInt();
-        if(n == 1)
-            System.out.println("employee is present,....");
-        else
-            System.out.println("employee not present,....");
+        // 0 for Absent, 1 for Present
+        int attendance = random.nextInt(2); // generates 0 or 1
+
+        // Check and print attendance status
+        if (attendance == 1) {
+            System.out.println("Employee is Present");
+        } else {
+            System.out.println("Employee is Absent");
+        }
     }
 }
