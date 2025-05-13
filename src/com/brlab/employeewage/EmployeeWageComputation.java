@@ -19,5 +19,15 @@ public class EmployeeWageComputation {
         } else {
             System.out.println("Employee is Absent");
         }
+
+        // Employee wage calculation-UC2
+        int wagePerHour = 20;
+        int fullDayHours = 8;
+
+        // Calculate daily wage
+        int dailyWage = wagePerHour * fullDayHours;
+
+        // Display the result
+        System.out.println("Daily Employee Wage: ₹" + dailyWage);
     }
 }
