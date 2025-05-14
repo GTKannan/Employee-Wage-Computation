@@ -4,30 +4,23 @@ import java.util.Random;
 
 public class EmployeeWageComputation {
 
-    // Class-level constants
-    static final int WAGE_PER_HOUR = 20;
-    static final int FULL_TIME_HOURS = 8;
-    static final int PART_TIME_HOURS = 4;
-    static final int MAX_WORKING_DAYS = 20;
-    static final int MAX_WORKING_HOURS = 100;
-
-    // Class-level variables
-    static int totalWage = 0;
-    static int totalHoursWorked = 0;
-    static int totalDaysWorked = 0;
-
     public static void main(String[] args) {
-        System.out.println("Welcome to Employee Wage Computation Program on master branch");
-        computeEmployeeWage();
-        displaySummary();
-    }
 
-    // Class method to compute employee wage
-    public static void computeEmployeeWage() {
+        int wagePerHour = 20;
+        int fullTimeHours = 8;
+        int partTimeHours = 4;
+        int totalWage=0;
+        int maxWorkingDays = 20;
+        int maxWorkingHours = 100;
+        int totalHoursWorked=0;
+        int totalDaysWorked=0;
+        int day=1;
+
+        System.out.println("Welcome to Employee Wage Computation Program on master branch");
+
         // Create Random object
         Random random = new Random();
-        int day = 1;
-        while (totalDaysWorked <= MAX_WORKING_DAYS && totalHoursWorked <= MAX_WORKING_HOURS && day <= MAX_WORKING_DAYS) {
+        while (totalDaysWorked <= maxWorkingDays && totalHoursWorked <= maxWorkingHours && day <= maxWorkingDays) {
             int empHours = 0;
             int empStatus = random.nextInt(3);  // 0=Absent, 1=Part-time, 2=Full-time
             switch (empStatus) {
@@ -36,36 +29,28 @@ public class EmployeeWageComputation {
                     break;
                 case 1:
                     System.out.println("Day " + day + ": Part-Time");
-                    empHours = PART_TIME_HOURS;
+                    empHours = partTimeHours;
                     break;
                 case 2:
                     System.out.println("Day " + day + ": Full-Time");
-                    empHours = FULL_TIME_HOURS;
+                    empHours = fullTimeHours;
                     break;
             }
 
-            // Ensure we don't exceed 100 hours
-            if (totalHoursWorked + empHours > MAX_WORKING_HOURS) {
-                empHours = MAX_WORKING_HOURS - totalHoursWorked; // Adjust last day's hours
-            }
-
             // Calculate daily wage
-            int dailyWage = WAGE_PER_HOUR * empHours;
+            int dailyWage = wagePerHour * empHours;
             totalWage += dailyWage;
 
-            if (empHours != 0) {
+            if(empHours!=0){
                 totalDaysWorked++;
-                totalHoursWorked += empHours;
+                totalHoursWorked+=empHours;
             }
 
             System.out.println("Wage for Day " + day + ": ₹" + dailyWage);
             System.out.println("Total Hours so far: " + totalHoursWorked + "\n");
             day++;
         }
-    }
 
-    // Class method to display final summary
-    public static void displaySummary() {
         // Display the result
         System.out.println("Total Working Days: " + totalDaysWorked);
         System.out.println("Total Working Hours: " + totalHoursWorked);
