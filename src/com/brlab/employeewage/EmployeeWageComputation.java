@@ -5,27 +5,31 @@ import java.util.Random;
 public class EmployeeWageComputation {
 
     public static void main(String[] args) {
+
+        int wagePerHour = 20;
+        int fullTimeHours = 8;
+        int partTimeHours = 4;
+        int empHours = 0;
+
         System.out.println("Welcome to Employee Wage Computation Program on master branch");
 
         // Create Random object
         Random random = new Random();
+        int empStatus = random.nextInt(3);  // 0=Absent, 1=Part-time, 2=Full-time
 
-        // 0 for Absent, 1 for Present
-        int attendance = random.nextInt(2); // generates 0 or 1
-
-        // Check and print attendance status
-        if (attendance == 1) {
-            System.out.println("Employee is Present");
-        } else {
-            System.out.println("Employee is Absent");
+        if (empStatus == 0) {
+            System.out.println("Employee is Absent.");
+            empHours = 0;
+        } else if (empStatus == 1) {
+            System.out.println("Employee is Part-Time.");
+            empHours = partTimeHours;
+        } else if (empStatus == 2) {
+            System.out.println("Employee is Full-Time.");
+            empHours = fullTimeHours;
         }
 
-        // Employee wage calculation-UC2
-        int wagePerHour = 20;
-        int fullDayHours = 8;
-
         // Calculate daily wage
-        int dailyWage = wagePerHour * fullDayHours;
+        int dailyWage = wagePerHour * empHours;
 
         // Display the result
         System.out.println("Daily Employee Wage: ₹" + dailyWage);
