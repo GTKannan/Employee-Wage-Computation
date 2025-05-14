@@ -17,15 +17,18 @@ public class EmployeeWageComputation {
         Random random = new Random();
         int empStatus = random.nextInt(3);  // 0=Absent, 1=Part-time, 2=Full-time
 
-        if (empStatus == 0) {
-            System.out.println("Employee is Absent.");
-            empHours = 0;
-        } else if (empStatus == 1) {
-            System.out.println("Employee is Part-Time.");
-            empHours = partTimeHours;
-        } else if (empStatus == 2) {
-            System.out.println("Employee is Full-Time.");
-            empHours = fullTimeHours;
+        switch (empStatus) {
+            case 0:
+                System.out.println("Employee is Absent.");
+                break;
+            case 1:
+                System.out.println("Employee is Part-Time.");
+                empHours = partTimeHours;
+                break;
+            case 2:
+                System.out.println("Employee is Full-Time.");
+                empHours = fullTimeHours;
+                break;
         }
 
         // Calculate daily wage
