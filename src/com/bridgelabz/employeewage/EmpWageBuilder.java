@@ -2,6 +2,12 @@ package com.bridgelabz.employeewage;
 
 import java.util.Random;
 
+// Interface
+interface EmployeeWageInterface {
+    void addCompany(String company, int wagePerHour, int workingDays, int maxHours);
+    void computeWages();
+}
+
 class CompanyEmpWage {
 
     // Class-level constants
@@ -27,12 +33,13 @@ class CompanyEmpWage {
         this.totalWage = totalWage;
     }
 
+    @Override
     public String toString() {
         return "Total Wage for Company " + companyName + " is ₹" + totalWage;
     }
 }
 
-public class EmpWageBuilder {
+public class EmpWageBuilder implements EmployeeWageInterface{
 
     CompanyEmpWage[] companies;
     int index = 0;
@@ -106,7 +113,7 @@ public class EmpWageBuilder {
 
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation Program on master branch");
-        EmpWageBuilder empWageBuilder = new EmpWageBuilder(3); // Can handle up to 3 companies
+        EmployeeWageInterface empWageBuilder = new EmpWageBuilder(3); // Can handle up to 3 companies
 
         empWageBuilder.addCompany("TCS", 20, 20, 100);
         empWageBuilder.addCompany("Infosys", 22, 22, 120);
