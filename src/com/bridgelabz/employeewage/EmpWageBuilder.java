@@ -2,21 +2,36 @@ package com.bridgelabz.employeewage;
 
 import java.util.Random;
 
-public class EmployeeWageComputation {
+public class EmpWageBuilder {
 
     // Class-level constants
     static final int FULL_TIME_HOURS = 8;
     static final int PART_TIME_HOURS = 4;
 
-    // Method to compute wage for a company using parameters
-    public static void computeEmployeeWage(String company, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
-        int totalWage = 0;
+    // Instance variables for each company
+    String companyName;
+    int wagePerHour;
+    int maxWorkingDays;
+    int maxWorkingHours;
+    int totalWage;
+
+    // Constructor to initialize company details
+    public EmpWageBuilder(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
+        this.companyName = companyName;
+        this.wagePerHour = wagePerHour;
+        this.maxWorkingDays = maxWorkingDays;
+        this.maxWorkingHours = maxWorkingHours;
+    }
+
+
+    // Method to compute wage and save total wage
+    public void computeEmployeeWage() {
         int totalHoursWorked = 0;
         int totalDaysWorked = 0;
         int day = 1;
         // Create Random object
         Random random = new Random();
-        System.out.println("Computing wages for company: " + company);
+        System.out.println("Computing wages for company: " + companyName);
         while (totalDaysWorked <= maxWorkingDays && totalHoursWorked <= maxWorkingHours && day <= maxWorkingDays) {
             int empHours = 0;
             int empStatus = random.nextInt(3);  // 0=Absent, 1=Part-time, 2=Full-time
@@ -53,7 +68,7 @@ public class EmployeeWageComputation {
             day++;
         }
 
-        displaySummary(company,totalDaysWorked,totalHoursWorked,totalWage);
+        displaySummary(companyName,totalDaysWorked,totalHoursWorked,totalWage);
     }
 
     // Class method to display final summary
@@ -66,10 +81,26 @@ public class EmployeeWageComputation {
         System.out.println("-----------------------------------------------------\n");
     }
 
+    // Method to return total wage
+    public int getTotalWage() {
+        return totalWage;
+    }
+
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation Program on master branch");
-        computeEmployeeWage("TCS", 20, 20, 100);
-        computeEmployeeWage("Infosys", 22, 22, 120);
-        computeEmployeeWage("Wipro", 18, 25, 90);
+        EmpWageBuilder tcs = new EmpWageBuilder("TCS", 20, 20, 100);
+        EmpWageBuilder infosys = new EmpWageBuilder("Infosys", 22, 22, 120);
+        EmpWageBuilder wipro = new EmpWageBuilder("Wipro", 18, 25, 90);
+
+        tcs.computeEmployeeWage();
+        infosys.computeEmployeeWage();
+        wipro.computeEmployeeWage();
+
+        // Display total wages
+        System.out.println("\nFinal Total Wages:");
+        System.out.println("TCS     : ₹" + tcs.getTotalWage());
+        System.out.println("Infosys : ₹" + infosys.getTotalWage());
+        System.out.println("Wipro   : ₹" + wipro.getTotalWage());
+
     }
 }
