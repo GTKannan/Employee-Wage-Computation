@@ -22,21 +22,35 @@ class CompanyEmpWage {
     int maxWorkingHours;
     int totalWage;
 
+    ArrayList<Integer> dailyWages;
+
     // Constructor to initialize company details
     public CompanyEmpWage(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
         this.companyName = companyName;
         this.wagePerHour = wagePerHour;
         this.maxWorkingDays = maxWorkingDays;
         this.maxWorkingHours = maxWorkingHours;
+        this.dailyWages = new ArrayList<>(); // ✅ Initialize the list
     }
 
     public void setTotalWage(int totalWage) {
         this.totalWage = totalWage;
     }
 
+    public void addDailyWage(int wage) {
+        dailyWages.add(wage); // ✅ Add wage to the list
+    }
+
     @Override
     public String toString() {
         return "Total Wage for Company " + companyName + " is ₹" + totalWage;
+    }
+
+    public void printDailyWages() {
+        System.out.println("Daily Wages for " + companyName + ":");
+        for (int i = 0; i < dailyWages.size(); i++) {
+            System.out.println("Day " + (i + 1) + ": ₹" + dailyWages.get(i));
+        }
     }
 }
 
@@ -55,6 +69,7 @@ public class EmpWageBuilder implements EmployeeWageInterface{
             int totalWage = computeEmployeeWage(company);
             company.setTotalWage(totalWage);
             System.out.println(company);
+            company.printDailyWages();
         }
     }
 
@@ -92,13 +107,14 @@ public class EmpWageBuilder implements EmployeeWageInterface{
             // Calculate daily wage
             int dailyWage = company.wagePerHour * empHours;
             totalWage += dailyWage;
+            company.addDailyWage(dailyWage);
 
             if (empHours != 0) {
                 totalDaysWorked++;
                 totalHoursWorked += empHours;
             }
 
-            System.out.println("Wage for Day " + day + ": ₹" + dailyWage);
+            //System.out.println("Wage for Day " + day + ": ₹" + dailyWage);
             System.out.println("Total Hours so far: " + totalHoursWorked + "\n");
             day++;
         }
