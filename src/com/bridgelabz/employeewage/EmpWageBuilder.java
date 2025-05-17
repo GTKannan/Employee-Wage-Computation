@@ -1,5 +1,6 @@
 package com.bridgelabz.employeewage;
 
+import java.util.HashMap;
 import java.util.Random;
 import java.util.ArrayList;
 
@@ -7,6 +8,7 @@ import java.util.ArrayList;
 interface EmployeeWageInterface {
     void addCompany(String company, int wagePerHour, int workingDays, int maxHours);
     void computeWages();
+    int getTotalWage(String companyName);
 }
 
 class CompanyEmpWage {
@@ -30,7 +32,7 @@ class CompanyEmpWage {
         this.wagePerHour = wagePerHour;
         this.maxWorkingDays = maxWorkingDays;
         this.maxWorkingHours = maxWorkingHours;
-        this.dailyWages = new ArrayList<>(); // ✅ Initialize the list
+        this.dailyWages = new ArrayList<>(); // Initialize the list
     }
 
     public void setTotalWage(int totalWage) {
@@ -57,6 +59,8 @@ class CompanyEmpWage {
 public class EmpWageBuilder implements EmployeeWageInterface{
 
     private final ArrayList<CompanyEmpWage> companyList = new ArrayList<>();
+    private final HashMap<String, Integer> companyToTotalWageMap = new HashMap<>(); // Add this
+
     int index=0;
     // Add a company to the array
     public void addCompany(String name, int wagePerHour, int workingDays, int workingHours) {
@@ -68,6 +72,7 @@ public class EmpWageBuilder implements EmployeeWageInterface{
         for (CompanyEmpWage company : companyList) {
             int totalWage = computeEmployeeWage(company);
             company.setTotalWage(totalWage);
+            companyToTotalWageMap.put(company.companyName, totalWage);
             System.out.println(company);
             company.printDailyWages();
         }
@@ -87,14 +92,14 @@ public class EmpWageBuilder implements EmployeeWageInterface{
             int empStatus = random.nextInt(3);  // 0=Absent, 1=Part-time, 2=Full-time
             switch (empStatus) {
                 case 0:
-                    System.out.println("Day " + day + ": Absent");
+                  //  System.out.println("Day " + day + ": Absent");
                     break;
                 case 1:
-                    System.out.println("Day " + day + ": Part-Time");
+                   // System.out.println("Day " + day + ": Part-Time");
                     empHours = CompanyEmpWage.PART_TIME_HOURS;
                     break;
                 case 2:
-                    System.out.println("Day " + day + ": Full-Time");
+                  //  System.out.println("Day " + day + ": Full-Time");
                     empHours = CompanyEmpWage.FULL_TIME_HOURS;
                     break;
             }
@@ -115,21 +120,36 @@ public class EmpWageBuilder implements EmployeeWageInterface{
             }
 
             //System.out.println("Wage for Day " + day + ": ₹" + dailyWage);
-            System.out.println("Total Hours so far: " + totalHoursWorked + "\n");
+           // System.out.println("Total Hours so far: " + totalHoursWorked + "\n");
             day++;
         }
         return totalWage;
     }
 
+    public int getTotalWage(String companyName) {
+        Integer totalWage = companyToTotalWageMap.get(companyName);
+        if (totalWage != null) {
+            return totalWage;
+        } else {
+            System.out.println("Company not found: " + companyName);
+            return -1;
+        }
+    }
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation Program on master branch");
-        EmployeeWageInterface empWageBuilder = new EmpWageBuilder(); // Can handle up to 3 companies
+        EmployeeWageInterface empWageBuilder = new EmpWageBuilder();
 
         empWageBuilder.addCompany("TCS", 20, 20, 100);
         empWageBuilder.addCompany("Infosys", 22, 22, 120);
         empWageBuilder.addCompany("Wipro", 18, 25, 90);
 
         empWageBuilder.computeWages();
+
+        // Query total wage by company
+        System.out.println("\nQueried Total Wage:");
+        System.out.println("TCS: ₹" + empWageBuilder.getTotalWage("TCS"));
+        System.out.println("Infosys: ₹" + empWageBuilder.getTotalWage("Infosys"));
+        System.out.println("Wipro: ₹" + empWageBuilder.getTotalWage("Wipro"));
 
     }
 }
