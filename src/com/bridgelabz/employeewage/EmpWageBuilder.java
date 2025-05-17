@@ -1,6 +1,7 @@
 package com.bridgelabz.employeewage;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 // Interface
 interface EmployeeWageInterface {
@@ -41,23 +42,16 @@ class CompanyEmpWage {
 
 public class EmpWageBuilder implements EmployeeWageInterface{
 
-    CompanyEmpWage[] companies;
-    int index = 0;
-
-    // Constructor to initialize company array
-    public EmpWageBuilder(int companyCount) {
-        companies = new CompanyEmpWage[companyCount];
-    }
-
+    private final ArrayList<CompanyEmpWage> companyList = new ArrayList<>();
+    int index=0;
     // Add a company to the array
     public void addCompany(String name, int wagePerHour, int workingDays, int workingHours) {
-        companies[index++] = new CompanyEmpWage(name, wagePerHour, workingDays, workingHours);
+        companyList.add(new CompanyEmpWage(name, wagePerHour, workingDays, workingHours));
     }
 
     // Compute wages for all companies
     public void computeWages() {
-        for (int i = 0; i < index; i++) {
-            CompanyEmpWage company = companies[i];
+        for (CompanyEmpWage company : companyList) {
             int totalWage = computeEmployeeWage(company);
             company.setTotalWage(totalWage);
             System.out.println(company);
@@ -113,7 +107,7 @@ public class EmpWageBuilder implements EmployeeWageInterface{
 
     public static void main(String[] args) {
         System.out.println("Welcome to Employee Wage Computation Program on master branch");
-        EmployeeWageInterface empWageBuilder = new EmpWageBuilder(3); // Can handle up to 3 companies
+        EmployeeWageInterface empWageBuilder = new EmpWageBuilder(); // Can handle up to 3 companies
 
         empWageBuilder.addCompany("TCS", 20, 20, 100);
         empWageBuilder.addCompany("Infosys", 22, 22, 120);
